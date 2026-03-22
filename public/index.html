@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ro">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASE Notite</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+
+<body>
+
+    <!-- ---------- LOGIN VIEW ------------ -->
+    <div id="view-login">
+
+        <header class="login-header">
+            <img src="media/Logo_ASE.png" alt="ASE Logo" style="height: 60px;">
+            <strong>ASE Notite</strong>
+        </header>
+
+        <main class="login-main">
+            <div class="card-login">
+                <h2>Autentificare</h2>
+
+                <input type="email" id="loginEmail" placeholder="numeprenume@stud.ase.ro">
+
+                <input type="password" id="loginParola" placeholder="Parola">
+
+                <button onclick="executaLogin()">Intra in cont</button>
+            </div>
+        </main>
+
+    </div>
+
+    <!-- ------------- DASHBOARD VIEW ------------ -->
+    <div id="view-dashboard" style="display: none;">
+
+        <header class="app-header">
+            <div class="header-left">
+                <img src="media/Logo_ASE.png" alt="ASE Logo" style="height: 40px;">
+                <span>Bine ai venit, student!</span>
+            </div>
+
+            <button class="btn-logout" onclick="logout()">Log out</button>
+        </header>
+
+        <div class="container">
+
+            <!-- SIDEBAR -->
+            <aside>
+                <button onclick="showSection('add')">+ Notita noua</button>
+                <button onclick="showSection('list')">Toate notitele</button>
+
+                <hr>
+
+                <p><strong>Materii</strong></p>
+                <ul id="materii">
+                    
+                </ul>
+            </aside>
+
+            <!-- MAIN CONTENT -->
+            <main id="app-content">
+
+                <!-- ADAUGA NOTITA -->
+                <section id="section-add">
+                    <h2>Notita noua</h2>
+                
+                    <div class="form-group">
+                        <input type="text" id="notitaTitlu" placeholder="Titlu notita..." class="full-width">
+                    </div>
+                
+                    <div class="form-row">
+                        <select id="materieSelect"></select>
+                        <input type="text" id="notitaTags" placeholder="Tag-uri (ex: examen, recapitulare)">
+                    </div>
+                
+                    <div class="form-group">
+                        <input type="text" id="notitaSource" placeholder="Sursa externa (Link YouTube, Site...)" class="full-width">
+                    </div>
+                
+                    <div class="form-group">
+                        <label for="notitaFile">Atasează fisier (Imagine/PDF):</label>
+                        <input type="file" id="notitaFile" accept="image/*, .pdf">
+                    </div>
+                
+                    <textarea id="markdownInput" placeholder="Scrie notitele aici ..."></textarea>
+                
+                    <h3>Previzualizare:</h3>
+                    <div id="preview" class="markdown-body"></div>
+                
+                    <button class="btn-save" onclick="saveNotita()">Salvează Notita</button>
+                    <button class="btn-cancel" onclick="showSection('list')">Anuleaza</button>
+                </section>
+
+                <!-- LISTA NOTITE -->
+                <section id="section-list" style="display: none;">
+                    <div class="list-header">
+                        <h2>Notitele mele</h2>
+                        <div class="filters">
+                            <input type="text" id="searchInput" placeholder="Cauta dupa titlu sau tag..." onkeyup="filtreazaNotite()">
+                            <select id="sortData" onchange="filtreazaNotite()">
+                                <option value="">Sortare dupa data</option>
+                                <option value="asc">Crescator</option>
+                                <option value="desc">Descrescator</option>
+                            </select>
+                            <select id="filterMaterie" onchange="filtreazaNotite()">
+                                <option value="">Toate materiile</option>
+                            </select>
+                        </div>
+                    </div>
+                
+                    <div id="notiteContainer"></div>
+                </section>
+
+            </main>
+
+        </div>
+
+    </div>
+
+    <!-- ------------------ TEMPLATE NOTITA -------------- -->
+    <template id="notita-template">
+        <div class="notita-card">
+            <div class="notita-header">
+                <h3 class="notita-titlu"></h3>
+                <span class="materie-badge"></span>
+            </div>
+
+            <div class="notita-meta">
+                <small class="notita-data"></small>
+                <div class="notita-tags"></div>
+            </div>
+
+            <div class="notita-body markdown-body"></div>
+
+            <div class="notita-attachment"></div>
+            <div class="notita-source"></div>
+
+            <div class="notita-actions">
+                <button class="btn-share">Partajeaza</button>
+                <button class="btn-edit">Editeaza</button>
+                <button class="btn-delete">Sterge</button>
+            </div>
+        </div>
+    </template>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
